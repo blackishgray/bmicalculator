@@ -38,8 +38,8 @@ console.log(data, weightClass)
         <h2>BMI and Weight Class</h2>
         <div>
           <form action='submit' className='form' onSubmit={handleSubmit}>
-            <input placeholder='Weight' type='number' value={weight} onChange={(e) => setWeight(e.target.value)}/>
-            <input placeholder='Height' type='number' value={height} onChange={(e) => setHeight(e.target.value)}/>
+            <input placeholder='Weight (kg)' type='number' value={weight} onChange={(e) => setWeight(e.target.value)}/>
+            <input placeholder='Height (cms)' type='number' value={height} onChange={(e) => setHeight(e.target.value)}/>
             <button type='submit' onClick={handleClick} className='btn'>Submit</button>
         </form>
         </div>
