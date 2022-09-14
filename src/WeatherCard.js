@@ -8,7 +8,7 @@ const WeatherCard = () => {
   const [data, setData] = useState([]);
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
-  const [weightClass, setWeightClass] = useState('')
+  const [weightClass, setWeightClass] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,17 +22,17 @@ const WeatherCard = () => {
   	.catch(err => console.error(err));
   }
 
-  const bmi = 45;
-  const wclass = 'normal class';
+  useEffect( () => {
+    if(data.length !== 0){
+       fetch(`https://body-mass-index-bmi-calculator.p.rapidapi.com/weight-category?bmi=${data['bmi']}`, options)
+       .then(response => response.json())
+       .then(response =>setWeightClass(response))
+       .catch(err => console.error(err));
+       console.log(data, weightClass)
+    }
+  }, [data])
 
-  if(data.length !== 0){
-     fetch(`https://body-mass-index-bmi-calculator.p.rapidapi.com/weight-category?bmi=${data['bmi']}`, options)
-     .then(response => response.json())
-     .then(response =>setWeightClass(response))
-     .catch(err => console.error(err));
-     console.log(data)
-  }
-
+console.log(data, weightClass)
   return (
       <section className='card'>
         <h2>BMI and Weight Class</h2>
@@ -45,8 +45,9 @@ const WeatherCard = () => {
         </div>
           <div>
             <br></br>
-            <h3 className='bmi'>BMI : {data['bmi']}</h3>
-            <h3 className='weightClass'>weight class : {weightClass}</h3>
+            { data ?  <h3 className='bmi'>BMI : {data['bmi'] * 10000 } </h3> : null }
+            { weightClass && <h3 className='weightClass'>weight class : {weightClass['weightCategory']}</h3>}
+
           </div>
       </section>
   )
